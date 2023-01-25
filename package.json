@@ -1,0 +1,23 @@
+{
+  "name": "zmdb-monitor",
+  "version": "1.0.0",
+  "description": "整合字幕库的相关监控代码",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sixiwanzi-live/zmdb-monitor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sixiwanzi-live/zmdb-monitor/issues"
+  },
+  "homepage": "https://github.com/sixiwanzi-live/zmdb-monitor#readme",
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  }
+}
