@@ -43,6 +43,7 @@ const archives = [
             console.log(`处理author(${archive.authorId})的replay`);
             const clip = await ZimuApi.findLatestClipByAuthorId(archive.authorId);
             if (!clip) return;
+            console.log(clip);
             // 获取B站源
             let video = {};
             const archiveRes = await fetch(archive.url);  // 请求合集列表
