@@ -28,8 +28,18 @@ export default class ZimuApi {
         });
     }
 
-    static async findLatestClipByAuthorId(authorId) {
-        const url = `${config.zimu.url}/authors/${authorId}/latest-clip`;
+    static async findOrganizations() {
+        const url = `${config.zimu.url}/organizations`;
         return await (await fetch(url)).json();
+    }
+
+    static async findClipsByOrganizationId(organizationId) {
+        const url = `${config.zimu.url}/organizations/${organizationId}/clips`;
+        return await (await fetch(url)).json();
+    }
+
+    static async findSrtByClipId(clipId) {
+        const url = `${config.zimu.url}/clips/${clipId}/srt`;
+        return await (await fetch(url)).text();
     }
 }
