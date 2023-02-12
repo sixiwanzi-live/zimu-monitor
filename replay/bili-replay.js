@@ -55,7 +55,6 @@ const archives = [
                 continue;
             }
             videos = archiveJson.data.archives;
-            console.log(videos);
             
             const authorIds = archive.authorIds;
             for (let j = 0; j < authorIds.length; ++j) {
@@ -64,8 +63,7 @@ const archives = [
                 console.log(author);
                 console.log(`处理author(${authorId})的replay`);
                 const clips = await ZimuApi.findClipsByAuthorId(authorId, 4, 1, 20);
-                if (clips.length === 0) break;
-                console.log(clips);
+                if (clips.length === 0) continue;
 
                 for (let k = 0; k < clips.length; ++k) {
                     const clip = clips[k];
