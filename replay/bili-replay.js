@@ -71,11 +71,11 @@ const archives = [
                     for (let m = 0; m < videos.length; ++m) {
                         const video = videos[m];
                         let matched = false;
-                        if (mode === 1) {
+                        if (archive.mode === 1) {
                             if (video.title.indexOf(clip.title) !== -1) {
                                 matched = true;
                             }
-                        } else if (mode === 2) {
+                        } else if (archive.mode === 2) {
                             if (video.title.indexOf(clip.title) !== -1 && video.title.indexOf(author.name) !== -1) {
                                 matched = true;
                             }
