@@ -33,6 +33,11 @@ export default class ZimuApi {
         return await (await fetch(url)).json();
     }
 
+    static async findAuthorsByOrganizationId(organizationId) {
+        const url = `${config.zimu.api.url}/organizations/${organizationId}/authors`;
+        return await (await fetch(url)).json();
+    }
+
     static async findAuthorById(authorId) {
         const url = `${config.zimu.api.url}/authors/${authorId}`;
         return await (await fetch(url)).json();
