@@ -55,14 +55,17 @@ const archives = [
                 continue;
             }
             videos = archiveJson.data.archives;
+            console.log(videos);
             
             const authorIds = archive.authorIds;
             for (let j = 0; j < authorIds.length; ++j) {
                 const authorId = authorIds[j];
                 const author = await ZimuApi.findAuthorById(authorId);
+                console.log(author);
                 console.log(`处理author(${authorId})的replay`);
                 const clips = await ZimuApi.findClipsByAuthorId(authorId, 4, 1, 20);
                 if (clips.length === 0) break;
+                console.log(clips);
 
                 for (let k = 0; k < clips.length; ++k) {
                     const clip = clips[k];
@@ -115,9 +118,6 @@ const archives = [
                     }
                 }
             }
-            
-            
-            
 
             // if (video.title.indexOf(clip.title) === -1) {
             //     console.log(`author(${archive.authorId})的合集列表中无匹配录播,${video.title},${clip.title}`);
