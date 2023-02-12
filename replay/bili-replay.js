@@ -73,7 +73,7 @@ const archives = [
                         const video = videos[m];
                         let matched = false;
                         if (archive.mode === 1) {
-                            const dt = `${clip.datetime.substring(0, 4)}年${parseInt(clip.datetime.substring(5, 7))}月${parseInt(clip.datetime.substring(8, 10))}日点场`;
+                            const dt = `${clip.datetime.substring(0, 4)}年${parseInt(clip.datetime.substring(5, 7))}月${parseInt(clip.datetime.substring(8, 10))}日${parseInt(clip.datetime.substring(11, 13))}点场`;
                             console.log(dt);
                             if (video.title.indexOf(clip.title) !== -1) {
                                 matched = true;
