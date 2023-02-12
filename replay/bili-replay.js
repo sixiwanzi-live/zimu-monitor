@@ -1,8 +1,17 @@
 import fetch from 'node-fetch';
 import PushApi from '../api/PushApi.js';
 import ZimuApi from '../api/ZimuApi.js';
-import { fromMilliseconds } from '../util.js'
 
+/**
+ * 日期格式有如下几种
+ * F1:YYYY-MM-DD
+ * F2:YYYY-m-d
+ * F3:YYYYMMDD
+ * F4:YYYY/MM/DD
+ * mode=1 适配官方录播回放源,含标题,日期格式为YYYY年M月D日H点场
+ * mode=2 适配录播man，含标题，日期
+ * mode=3 适配录播man，含标题，up名称，日期
+ */
 const archives = [
     {
         // AI中国绊爱
@@ -67,6 +76,14 @@ const archives = [
 
                 for (let k = 0; k < clips.length; ++k) {
                     const clip = clips[k];
+                    const f1 = clip.datetime.substring(0, 10);
+                    const f2 = `${clip.datetime.substring(0,4)}-${parseInt(clip.datetime.substring(5,7))}-${parseInt(clip.datetime.substring(8,10))}`;
+                    const f3 = `${clip.datetime.substring(0,4)}${clip.datetime.substring(5,7)}${clip.datetime.substring(8,10)}`;
+                    const f4 = `${clip.datetime.substring(0,4)}/${clip.datetime.substring(5,7)}/${clip.datetime.substring(8,10)}`;
+                    console.log(f1);
+                    console.log(f2);
+                    console.log(f3);
+                    console.log(f4);
                     const srt = await ZimuApi.findSrtByClipId(clip.id);
                     if (srt.length !== 0) continue;
                     for (let m = 0; m < videos.length; ++m) {
@@ -74,12 +91,27 @@ const archives = [
                         let matched = false;
                         if (archive.mode === 1) {
                             const dt = `${clip.datetime.substring(0, 4)}年${parseInt(clip.datetime.substring(5, 7))}月${parseInt(clip.datetime.substring(8, 10))}日${parseInt(clip.datetime.substring(11, 13))}点场`;
-                            console.log(dt);
-                            if (video.title.indexOf(clip.title) !== -1) {
+                            if (video.title.indexOf(clip.title) !== -1 && video.title.indexOf(dt) !== -1) {
                                 matched = true;
                             }
                         } else if (archive.mode === 2) {
-                            if (video.title.indexOf(clip.title) !== -1 && video.title.indexOf(author.name) !== -1) {
+                            if (video.title.indexOf(clip.title) !== -1 && 
+                                (
+                                    video.title.indexOf(f1) !== -1 || 
+                                    video.title.indexOf(f2) !== -1 || 
+                                    video.title.indexOf(f3) !== -1 || 
+                                    video.title.indexOf(f4) !== -1
+                                )) {
+                                matched = true;
+                            }
+                        } else if (archive.mode === 3) {
+                            if (video.title.indexOf(clip.title) !== -1 && video.title.indexOf(author.name) !== -1 && 
+                            (
+                                video.title.indexOf(f1) !== -1 || 
+                                video.title.indexOf(f2) !== -1 || 
+                                video.title.indexOf(f3) !== -1 || 
+                                video.title.indexOf(f4) !== -1
+                            )) {
                                 matched = true;
                             }
                         }
