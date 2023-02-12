@@ -4,7 +4,7 @@ import config from '../config.js';
 export default class ZimuApi {
 
     static async updateClip(clip) {
-        const url = `${config.zimu.url}/clips/${clip.id}`;
+        const url = `${config.zimu.api.url}/clips/${clip.id}`;
         const res = await fetch(url, {
             method: 'PUT',
             headers: {
@@ -17,7 +17,7 @@ export default class ZimuApi {
     }
 
     static async insertSubtitle(clipId, srt) {
-        const url = `${config.zimu.url}/clips/${clipId}/subtitles`;
+        const url = `${config.zimu.api.url}/clips/${clipId}/subtitles`;
         const res = await fetch(url, {
             method: 'POST',
             headers: {
@@ -29,17 +29,32 @@ export default class ZimuApi {
     }
 
     static async findOrganizations() {
-        const url = `${config.zimu.url}/organizations`;
+        const url = `${config.zimu.api.url}/organizations`;
+        return await (await fetch(url)).json();
+    }
+
+    static async findAuthorById(authorId) {
+        const url = `${config.zimu.api.url}/authors/${authorId}`;
         return await (await fetch(url)).json();
     }
 
     static async findClipsByOrganizationId(organizationId) {
-        const url = `${config.zimu.url}/organizations/${organizationId}/clips`;
+        const url = `${config.zimu.api.url}/organizations/${organizationId}/clips`;
+        return await (await fetch(url)).json();
+    }
+
+    static async findClipsByAuthorId(authorId, type, page, size) {
+        const url = `${config.zimu.api.url}/authors/${authorId}/clips?type=${type}&page=${page}&size=${size}`;
         return await (await fetch(url)).json();
     }
 
     static async findSrtByClipId(clipId) {
-        const url = `${config.zimu.url}/clips/${clipId}/srt`;
+        const url = `${config.zimu.api.url}/clips/${clipId}/srt`;
+        return await (await fetch(url)).text();
+    }
+
+    static async findSubtitlesByBv(bv) {
+        const url = `${config.zimu.tool.url}/subtitles?bv=${bv}`;
         return await (await fetch(url)).text();
     }
 }
