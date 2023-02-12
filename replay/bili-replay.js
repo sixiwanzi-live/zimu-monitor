@@ -86,27 +86,41 @@ const archives = [
                         let matched = false;
                         if (archive.mode === 1) {
                             const dt = `${clip.datetime.substring(0, 4)}年${parseInt(clip.datetime.substring(5, 7))}月${parseInt(clip.datetime.substring(8, 10))}日${parseInt(clip.datetime.substring(11, 13))}点场`;
-                            if (video.title.indexOf(clip.title) !== -1 && video.title.indexOf(dt) !== -1) {
+                            if (
+                                (
+                                    video.title.indexOf(clip.title) !== -1 || 
+                                    video.title.indexOf(clip.title.replaceAll(' ', '')) !== -1
+                                ) && video.title.indexOf(dt) !== -1) {
                                 matched = true;
                             }
                         } else if (archive.mode === 2) {
-                            if (video.title.indexOf(clip.title) !== -1 && 
+                            if (
+                                (
+                                    video.title.indexOf(clip.title) !== -1  ||
+                                    video.title.indexOf(clip.title.replaceAll(' ', '')) !== -1
+                                ) && 
                                 (
                                     video.title.indexOf(f1) !== -1 || 
                                     video.title.indexOf(f2) !== -1 || 
                                     video.title.indexOf(f3) !== -1 || 
                                     video.title.indexOf(f4) !== -1
-                                )) {
+                                )
+                            ) {
                                 matched = true;
                             }
                         } else if (archive.mode === 3) {
-                            if (video.title.indexOf(clip.title) !== -1 && video.title.indexOf(author.name) !== -1 && 
-                            (
-                                video.title.indexOf(f1) !== -1 || 
-                                video.title.indexOf(f2) !== -1 || 
-                                video.title.indexOf(f3) !== -1 || 
-                                video.title.indexOf(f4) !== -1
-                            )) {
+                            if (
+                                (
+                                    video.title.indexOf(clip.title) !== -1 || 
+                                    video.title.indexOf(clip.title.replaceAll(' ', '')) !== -1
+                                ) && video.title.indexOf(author.name) !== -1 && 
+                                (
+                                    video.title.indexOf(f1) !== -1 || 
+                                    video.title.indexOf(f2) !== -1 || 
+                                    video.title.indexOf(f3) !== -1 || 
+                                    video.title.indexOf(f4) !== -1
+                                )
+                            ) {
                                 matched = true;
                             }
                         }
