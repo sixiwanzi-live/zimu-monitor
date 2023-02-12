@@ -16,31 +16,31 @@ const archives = [
     {
         // AI中国绊爱
         authorIds: [8],
-        url: 'https://api.bilibili.com/x/series/archives?mid=484322035&series_id=210661&only_normal=true&sort=desc&pn=1&ps=1',
+        url: 'https://api.bilibili.com/x/series/archives?mid=484322035&series_id=210661&only_normal=true&sort=desc&pn=1&ps=10',
         mode: 1
     },
     {
         // 凜凜蝶凜
         authorIds: [21],
-        url: 'https://api.bilibili.com/x/series/archives?mid=1220317431&series_id=2610314&only_normal=true&sort=desc&pn=1&ps=1',
+        url: 'https://api.bilibili.com/x/series/archives?mid=1220317431&series_id=2610314&only_normal=true&sort=desc&pn=1&ps=10',
         mode: 1
     },
     {
         // 灯夜tomoya
         authorIds: [29],
-        url: 'https://api.bilibili.com/x/series/archives?mid=1854400894&series_id=2880259&only_normal=true&sort=desc&pn=1&ps=1',
+        url: 'https://api.bilibili.com/x/series/archives?mid=1854400894&series_id=2880259&only_normal=true&sort=desc&pn=1&ps=10',
         mode: 1
     },
     {
         // 扇宝
         authorIds: [30],
-        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1682965468&season_id=1022826&sort_reverse=false&page_num=1&page_size=1',
+        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1682965468&season_id=1022826&sort_reverse=false&page_num=1&page_size=10',
         mode: 2
     },
     {
         // 安可
         authorIds: [31],
-        url: 'https://api.bilibili.com/x/series/archives?mid=1375400985&series_id=2924566&only_normal=true&sort=desc&pn=1&ps=1',
+        url: 'https://api.bilibili.com/x/series/archives?mid=1375400985&series_id=2924566&only_normal=true&sort=desc&pn=1&ps=10',
         mode: 2
     },
     {
