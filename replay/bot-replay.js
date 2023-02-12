@@ -17,7 +17,7 @@ import BiliApi from '../api/BiliApi.js';
         const authors = await ZimuApi.findAuthorsByOrganizationId(organizationId);
         for (let j = 0; j < authors.length; ++j) {
             const author = authors[j];
-            const clips = await ZimuApi.findClipsByAuthorId(author.id, 4, 1, 5);
+            const clips = await ZimuApi.findClipsByAuthorId(author.id, 3, 1, 5);
             if (clips.length === 0) continue;
             for (let k = 0; k < clips.length; ++k) {
                 const clip = clips[k];
