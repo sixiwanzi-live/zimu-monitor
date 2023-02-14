@@ -9,6 +9,9 @@ export default {
         },
         tool: {
             url: '字幕库tool地址'
+        },
+        live: {
+            root: 'live文件夹根目录'
         }
     }
 }
