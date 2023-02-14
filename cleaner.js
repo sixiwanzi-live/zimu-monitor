@@ -16,6 +16,7 @@ import ZimuApi from './api/ZimuApi.js';
             if (clips.length === 0) continue;
             for (let k = 0; k < clips.length; ++k) {
                 const clip = clips[k];
+                console.log(clip);
                 try {
                     const YYYY = clip.datetime.substring(0, 4);
                     const MM = clip.datetime.substring(5, 7);
