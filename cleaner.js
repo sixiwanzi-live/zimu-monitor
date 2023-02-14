@@ -24,6 +24,7 @@ import ZimuApi from './api/ZimuApi.js';
                     const mm = clip.datetime.substring(14, 16);
                     const ss = clip.datetime.substring(17, 19);
                     const file = `${config.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.flv`;
+                    console.log(file);
                     await unlink(file);
                     console.log(`删除成功:${file}`);
                 } catch (ex) {}
