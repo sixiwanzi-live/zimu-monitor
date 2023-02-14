@@ -31,7 +31,6 @@ import ZimuApi from './api/ZimuApi.js';
                     await unlink(xml);
                     console.log(`删除成功:${xml}`);
                 } catch (ex) {
-                    console.log(ex);
                 }
             }
         }        
