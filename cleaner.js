@@ -17,7 +17,6 @@ import ZimuApi from './api/ZimuApi.js';
             if (clips.length === 0) continue;
             for (let k = 0; k < clips.length; ++k) {
                 const clip = clips[k];
-                console.log(clip);
                 try {
                     const YYYY = clip.datetime.substring(0, 4);
                     const MM = clip.datetime.substring(5, 7);
@@ -25,10 +24,12 @@ import ZimuApi from './api/ZimuApi.js';
                     const hh = clip.datetime.substring(11, 13);
                     const mm = clip.datetime.substring(14, 16);
                     const ss = clip.datetime.substring(17, 19);
-                    const file = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.flv`;
-                    console.log(file);
-                    await unlink(file);
-                    console.log(`删除成功:${file}`);
+                    const flv = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.flv`;
+                    const xml = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.xml`;
+                    await unlink(flv);
+                    console.log(`删除成功:${flv}`);
+                    await unlink(xml);
+                    console.log(`删除成功:${xml}`);
                 } catch (ex) {
                     console.log(ex);
                 }
