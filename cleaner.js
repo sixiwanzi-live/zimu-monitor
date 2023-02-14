@@ -1,4 +1,5 @@
 import { unlink } from 'fs/promises';
+import config from './config.js';
 import ZimuApi from './api/ZimuApi.js';
 
 (async () => {
