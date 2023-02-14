@@ -28,7 +28,9 @@ import ZimuApi from './api/ZimuApi.js';
                     console.log(file);
                     await unlink(file);
                     console.log(`删除成功:${file}`);
-                } catch (ex) {}
+                } catch (ex) {
+                    console.log(ex);
+                }
             }
         }        
     }
