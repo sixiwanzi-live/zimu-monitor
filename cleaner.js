@@ -1,5 +1,5 @@
 import { unlink } from 'fs/promises';
-import ZimuApi from '../api/ZimuApi.js';
+import ZimuApi from './api/ZimuApi.js';
 
 (async () => {
     // 获取所有组织/社团列表
