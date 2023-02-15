@@ -26,10 +26,13 @@ import ZimuApi from './api/ZimuApi.js';
                     const ss = clip.datetime.substring(17, 19);
                     const flv = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.flv`;
                     const xml = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.xml`;
+                    const txt = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.txt`;
                     await unlink(flv);
                     console.log(`删除成功:${flv}`);
                     await unlink(xml);
                     console.log(`删除成功:${xml}`);
+                    await unlink(txt);
+                    console.log(`删除成功:${txt}`);
                 } catch (ex) {
                 }
             }

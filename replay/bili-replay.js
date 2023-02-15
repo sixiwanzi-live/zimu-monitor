@@ -75,6 +75,9 @@ const archives = [
 
                 for (let k = 0; k < clips.length; ++k) {
                     const clip = clips[k];
+                    // clip信息更新入库写文件的时候，因为windows系统不支持*号，所以clip.title中的*换成了_
+                    // 这里去掉_以便于匹配B站源的标题
+                    const modifiedTitle = clip.title.replaceAll('_', '');
                     const f1 = clip.datetime.substring(0, 10);
                     const f2 = `${clip.datetime.substring(0,4)}-${parseInt(clip.datetime.substring(5,7))}-${parseInt(clip.datetime.substring(8,10))}`;
                     const f3 = `${clip.datetime.substring(0,4)}${clip.datetime.substring(5,7)}${clip.datetime.substring(8,10)}`;
@@ -88,16 +91,16 @@ const archives = [
                             const dt = `${clip.datetime.substring(0, 4)}年${parseInt(clip.datetime.substring(5, 7))}月${parseInt(clip.datetime.substring(8, 10))}日${parseInt(clip.datetime.substring(11, 13))}点场`;
                             if (
                                 (
-                                    video.title.indexOf(clip.title) !== -1 || 
-                                    video.title.indexOf(clip.title.replaceAll(' ', '')) !== -1
+                                    video.title.indexOf(modifiedTitle) !== -1 || 
+                                    video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1
                                 ) && video.title.indexOf(dt) !== -1) {
                                 matched = true;
                             }
                         } else if (archive.mode === 2) {
                             if (
                                 (
-                                    video.title.indexOf(clip.title) !== -1  ||
-                                    video.title.indexOf(clip.title.replaceAll(' ', '')) !== -1
+                                    video.title.indexOf(modifiedTitle) !== -1  ||
+                                    video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1
                                 ) && 
                                 (
                                     video.title.indexOf(f1) !== -1 || 
@@ -111,8 +114,8 @@ const archives = [
                         } else if (archive.mode === 3) {
                             if (
                                 (
-                                    video.title.indexOf(clip.title) !== -1 || 
-                                    video.title.indexOf(clip.title.replaceAll(' ', '')) !== -1
+                                    video.title.indexOf(modifiedTitle) !== -1 || 
+                                    video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1
                                 ) && video.title.indexOf(author.name) !== -1 && 
                                 (
                                     video.title.indexOf(f1) !== -1 || 
