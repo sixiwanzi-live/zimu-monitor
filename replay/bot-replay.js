@@ -27,7 +27,7 @@ import AsrApi from '../api/AsrApi.js';
                 // 查找与没有字幕clip匹配的投稿
                 for (let m = 0; m < replays.length; ++m) {
                     const replay = replays[m];
-                    if (clip.playUrl.indexOf(replay.title) !== -1) {
+                    if (clip.playUrl.indexOf(replay.title.replaceAll(`-${clip.authorId}-`, `-${author.name}-`)) !== -1) {
                         console.log(`找到匹配:${clip.playUrl}, ${replay.title}`);
                         let subtitles = await ZimuApi.findSubtitlesByBv(replay.bvid);
                         if (subtitles.length === 0) {

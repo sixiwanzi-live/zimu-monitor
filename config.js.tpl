@@ -20,12 +20,6 @@ export default {
     bili: {
         api: {
             url: ''
-        },
-        bcut: {
-            reqUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/resource/create',
-            commitUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/resource/create/complete',
-            taskUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/task',
-            queryUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/task/result',
         }
     }
 }
