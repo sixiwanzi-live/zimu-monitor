@@ -12,6 +12,20 @@ export default {
         },
         live: {
             root: 'live文件夹根目录'
+        },
+        asr: {
+            url: '字幕库智能字幕解析地址'
+        }
+    },
+    bili: {
+        api: {
+            url: ''
+        },
+        bcut: {
+            reqUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/resource/create',
+            commitUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/resource/create/complete',
+            taskUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/task',
+            queryUrl: 'https://member.bilibili.com/x/bcut/rubick-interface/task/result',
         }
     }
 }

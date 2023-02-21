@@ -1,6 +1,7 @@
 import PushApi from '../api/PushApi.js';
 import ZimuApi from '../api/ZimuApi.js';
 import BiliApi from '../api/BiliApi.js';
+import AsrApi from '../api/AsrApi.js';
 
 (async () => {
     // 获取字幕库投稿bot中的回放列表
@@ -28,10 +29,14 @@ import BiliApi from '../api/BiliApi.js';
                     const replay = replays[m];
                     if (clip.playUrl.indexOf(replay.title) !== -1) {
                         console.log(`找到匹配:${clip.playUrl}, ${replay.title}`);
-                        const subtitles = await ZimuApi.findSubtitlesByBv(replay.bvid);
+                        let subtitles = await ZimuApi.findSubtitlesByBv(replay.bvid);
                         if (subtitles.length === 0) {
                             PushApi.push(`author(${clip.authorId})的录播(${clip.title},${replay.bvid})未找到智能字幕`, '');
-                            continue;
+                            subtitles = await AsrApi.parse(replay.bvid);
+                            if (subtitles.length === 0) {
+                                PushApi.push(`author(${clip.authorId})的录播(${replay.title},${replay.bvid})asr执行失败`, '');
+                                continue;
+                            }
                         }
                         try {
                             await ZimuApi.insertSubtitle(clip.id, subtitles);

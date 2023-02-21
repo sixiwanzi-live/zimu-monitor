@@ -4,7 +4,7 @@ import config from '../config.js';
 export default class BiliApi {
 
     static async findClipsFromBot() {
-        const url = `${config.bili.url}/x/space/wbi/arc/search?mid=1179112593&pn=1&ps=50&index=1&order=pubdate&order_avoided=true`;
+        const url = `${config.bili.api.url}/x/space/wbi/arc/search?mid=1179112593&pn=1&ps=50&index=1&order=pubdate&order_avoided=true`;
         const res = await fetch(url, {
             method: 'GET',
             headers: {
@@ -15,7 +15,7 @@ export default class BiliApi {
     }
 
     static async fetchVideoInfo(bvid) {
-        const url = `${config.bili.url}/x/web-interface/view?bvid=${bvid}`;
+        const url = `${config.bili.api.url}/x/web-interface/view?bvid=${bvid}`;
         return await (await fetch(url)).json();
     }
 }

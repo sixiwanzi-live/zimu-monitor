@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import PushApi from '../api/PushApi.js';
 import ZimuApi from '../api/ZimuApi.js';
+import AsrApi from '../api/AsrApi.js';
 
 /**
  * 日期格式有如下几种
@@ -142,11 +143,16 @@ const archives = [
                                 PushApi.push(`更新clip(${clip.title})的bv失败`, ex);
                                 continue;
                             }
-                            const subtitles = await ZimuApi.findSubtitlesByBv(video.bvid);
+                            let subtitles = await ZimuApi.findSubtitlesByBv(video.bvid);
                             if (subtitles.length === 0) {
                                 console.log(`author(${authorId})未找到智能字幕:${video.bvid},${clip.datetime},${video.title}`);
                                 PushApi.push(`author(${authorId})未找到智能字幕:${video.bvid},${clip.datetime},${video.title}`, '');
-                                continue;
+                                subtitles = await AsrApi.parse(video.bvid);
+                                if (subtitles.length === 0) {
+                                    console.log(`author(${clip.authorId})的录播(${video.title},${video.bvid})asr执行失败`);
+                                    PushApi.push(`author(${clip.authorId})的录播(${video.title},${video.bvid})asr执行失败`, '');
+                                    continue;
+                                }
                             };
                             try {
                                 await ZimuApi.insertSubtitle(clip.id, subtitles);
