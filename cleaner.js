@@ -44,10 +44,10 @@ import ZimuApi from './api/ZimuApi.js';
                     } catch (ex) {
                         console.log(ex);
                     }
-                    if (!found) {
-                        await unlink(`${dir}/${file}`);
-                        console.log(`无匹配clip,删除成功:${dir}/${file}`);
-                    }
+                }
+                if (!found) {
+                    await unlink(`${dir}/${file}`);
+                    console.log(`无匹配clip,删除成功:${dir}/${file}`);
                 }
             }
         }        
