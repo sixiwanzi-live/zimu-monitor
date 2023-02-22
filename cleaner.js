@@ -4,7 +4,6 @@ import config from './config.js';
 import ZimuApi from './api/ZimuApi.js';
 
 (async () => {
-    // const root = 'C:/zimu/data/live';
     // 获取所有组织/社团列表
     const organizations = await ZimuApi.findOrganizations();
 
@@ -18,7 +17,7 @@ import ZimuApi from './api/ZimuApi.js';
             console.log(`当前处理author:${author.name}`);
             const clips = await ZimuApi.findClipsByAuthorId(author.id, 1, 1, 10);
             if (clips.length === 0) continue;
-            const dir = `${config.cleaner.liveRoot}/${organizationId}/${author.name}/${moment().format('YYYY-MM')}`;
+            const dir = `${config.zimu.live.root}/${organizationId}/${author.name}/${moment().format('YYYY-MM')}`;
             console.log(`当前处理文件夹:${dir}`);
             const files = await readdir(dir);
             for (let p = 0; p < files.length; ++p) {
