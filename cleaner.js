@@ -19,7 +19,13 @@ import ZimuApi from './api/ZimuApi.js';
             if (clips.length === 0) continue;
             const dir = `${config.zimu.live.root}/${organizationId}/${author.name}/${moment().format('YYYY-MM')}`;
             console.log(`当前处理文件夹:${dir}`);
-            const files = await readdir(dir);
+            let files = [];
+            try {
+                files = await readdir(dir);
+            } catch (ex) {
+                console.log(`文件夹不存在:${dir}`);
+                break;
+            }
             for (let p = 0; p < files.length; ++p) {
                 const file = files[p];
                 console.log(`当前处理文件:${file}`);
