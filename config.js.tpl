@@ -17,6 +17,9 @@ export default {
             url: '字幕库智能字幕解析地址'
         }
     },
+    cleaner: {
+        authorIds: [39, 40, 41, 42, 43]
+    }
     bili: {
         api: {
             url: ''
