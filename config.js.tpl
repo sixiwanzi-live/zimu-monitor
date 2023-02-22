@@ -17,6 +17,9 @@ export default {
             url: '字幕库智能字幕解析地址'
         }
     },
+    cleaner :{
+        liveRoot: '直播文件地址'
+    },
     bili: {
         api: {
             url: ''

@@ -1,39 +1,48 @@
-import { unlink } from 'fs/promises';
+import { unlink, readdir } from 'fs/promises';
+import moment from 'moment';
 import config from './config.js';
 import ZimuApi from './api/ZimuApi.js';
 
 (async () => {
+    // const root = 'C:/zimu/data/live';
     // 获取所有组织/社团列表
     const organizations = await ZimuApi.findOrganizations();
 
     for (let i = 0; i < organizations.length; ++i) {
         const organizationId = organizations[i].id;
-        console.log(`org:${organizationId}`);
+        console.log(`当前处理org:${organizations[i].name}`);
         // 获取组织/社团下的up列表
         const authors = await ZimuApi.findAuthorsByOrganizationId(organizationId);
         for (let j = 0; j < authors.length; ++j) {
             const author = authors[j];
+            console.log(`当前处理author:${author.name}`);
             const clips = await ZimuApi.findClipsByAuthorId(author.id, 1, 1, 10);
             if (clips.length === 0) continue;
-            for (let k = 0; k < clips.length; ++k) {
-                const clip = clips[k];
-                try {
-                    const YYYY = clip.datetime.substring(0, 4);
-                    const MM = clip.datetime.substring(5, 7);
-                    const DD = clip.datetime.substring(8, 10);
-                    const hh = clip.datetime.substring(11, 13);
-                    const mm = clip.datetime.substring(14, 16);
-                    const ss = clip.datetime.substring(17, 19);
-                    const flv = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.flv`;
-                    const xml = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.xml`;
-                    const txt = `${config.zimu.live.root}/${organizationId}/${author.name}/${YYYY}-${MM}/${YYYY}${MM}${DD}-${hh}${mm}${ss}-${author.name}-${clip.title}.txt`;
-                    await unlink(flv);
-                    console.log(`删除成功:${flv}`);
-                    await unlink(xml);
-                    console.log(`删除成功:${xml}`);
-                    await unlink(txt);
-                    console.log(`删除成功:${txt}`);
-                } catch (ex) {
+            const dir = `${config.cleaner.liveRoot}/${organizationId}/${author.name}/${moment().format('YYYY-MM')}`;
+            console.log(`当前处理文件夹:${dir}`);
+            const files = await readdir(dir);
+            for (let p = 0; p < files.length; ++p) {
+                const file = files[p];
+                console.log(`当前处理文件:${file}`);
+                let found = false;
+                for (let k = 0; k < clips.length; ++k) {
+                    const clip = clips[k];
+                    try {
+                        if (file.indexOf(clip.title) !== -1) {
+                            found = true;
+                            console.log(`已匹配clip:${file}`);
+                            if (clip.type === 1) {
+                                await unlink(`${dir}/${file}`);
+                                console.log(`B站源存在,删除成功:${dir}/${file}`);
+                            }
+                        }
+                    } catch (ex) {
+                        console.log(ex);
+                    }
+                    if (!found) {
+                        await unlink(`${dir}/${file}`);
+                        console.log(`无匹配clip,删除成功:${dir}/${file}`);
+                    }
                 }
             }
         }        
