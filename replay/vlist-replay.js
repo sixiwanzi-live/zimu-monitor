@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
 import PushApi from '../api/PushApi.js';
 import ZimuApi from '../api/ZimuApi.js';
+import BiliApi from '../api/BiliApi.js';
 import AsrApi from '../api/AsrApi.js';
 
 /**
