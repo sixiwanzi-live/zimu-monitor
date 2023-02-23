@@ -50,7 +50,7 @@ import AsrApi from '../api/AsrApi.js';
                     res();
                     return;
                 }
-                const videoJson = await BiliApi.fetchReplayList(authorId, seriesId);
+                const videoJson = await BiliApi.fetchReplayList(author.uid, seriesId);
                 const videos = videoJson.data.archives;
                 console.log(videoJson);
 
