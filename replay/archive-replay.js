@@ -1,3 +1,4 @@
+import config from '../config.js';
 import PushApi from '../api/PushApi.js';
 import ZimuApi from '../api/ZimuApi.js';
 import BiliApi from '../api/BiliApi.js';
