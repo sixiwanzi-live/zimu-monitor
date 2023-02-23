@@ -31,6 +31,11 @@ import AsrApi from '../api/AsrApi.js';
                     }
                     for (let k = 0; k < clips.length; ++k) {
                         const clip = clips[k];
+                        // 如果已有字幕数据则跳过
+                        const srt = await ZimuApi.findSrtByClipId(clip.id);
+                        if (srt.length !== 0) {
+                            continue;
+                        }
                         for (let m = 0; m < videos.length; ++m) {
                             const video = videos[m];
                             // 将指定clip与所有b站video按照规则逐一对比，发现标题匹配的就执行解析
