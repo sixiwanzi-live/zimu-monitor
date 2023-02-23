@@ -66,6 +66,7 @@ const archives = [
                 continue;
             }
             videos = archiveJson.data.archives;
+            console.log(videos);
             
             const authorIds = archive.authorIds;
             for (let j = 0; j < authorIds.length; ++j) {
