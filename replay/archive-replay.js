@@ -4,35 +4,6 @@ import ZimuApi from '../api/ZimuApi.js';
 import BiliApi from '../api/BiliApi.js';
 import AsrApi from '../api/AsrApi.js';
 
-/**
- * 日期格式有如下几种
- * F1:YYYY-MM-DD
- * F2:YYYY-m-d
- * F3:YYYYMMDD
- * F4:YYYY/MM/DD
- * mode=1 适配官方录播回放源,含标题,日期格式为YYYY年M月D日H点场
- * mode=2 适配录播man，含标题，日期
- * mode=3 适配录播man，含标题，up名称，日期
- */
-// const archives = [
-//     {
-//         // AI中国绊爱
-//         authorId: 8,
-//         url: 'https://api.bilibili.com/x/series/archives?mid=484322035&series_id=210661&only_normal=true&sort=desc&pn=1&ps=10',
-//     },
-//     {
-//         // 凜凜蝶凜
-//         authorId: 21,
-//         url: 'https://api.bilibili.com/x/series/archives?mid=1220317431&series_id=2610314&only_normal=true&sort=desc&pn=1&ps=10'
-//     },
-//     {
-//         // 灯夜tomoya
-//         authorId: 29,
-//         url: 'https://api.bilibili.com/x/series/archives?mid=1854400894&series_id=2880259&only_normal=true&sort=desc&pn=1&ps=10'
-//     }
-// ];
-
-
 (async () => {
     let tasks = [];
     for (let i = 0; i < config.bili.replay.length; ++i) {
