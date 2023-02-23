@@ -24,6 +24,7 @@ export default {
         api: {
             url: ''
         },
+        bot: 0,
         replay: [{
             authorId: 0,
             seriesId: 0

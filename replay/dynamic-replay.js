@@ -3,16 +3,6 @@ import ZimuApi from '../api/ZimuApi.js';
 import BiliApi from '../api/BiliApi.js';
 import AsrApi from '../api/AsrApi.js';
 
-/**
- * 日期格式有如下几种
- * F1:YYYY-MM-DD
- * F2:YYYY-m-d
- * F3:YYYYMMDD
- * F4:YYYY/MM/DD
- * mode=1 适配官方录播回放源,含标题,日期格式为YYYY年M月D日H点场
- * mode=2 适配录播man，含标题，日期
- * mode=3 适配录播man，含标题，up名称，日期
- */
 const archives = [
     {
         // 扇宝
@@ -126,11 +116,10 @@ const archives = [
                                 }
                             }
                         }
-                        res();
                     } catch (ex) {
                         console.error(ex);
-                        rej();
                     }
+                    res();
                 }));
             }
         } catch (ex) {
