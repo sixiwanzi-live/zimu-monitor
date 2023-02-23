@@ -5,7 +5,8 @@ import AsrApi from '../api/AsrApi.js';
 
 (async () => {
     // 获取字幕库投稿bot中的回放列表
-    const json1 = await BiliApi.findClipsFromBot();
+    const mid = 1179112593;
+    const json1 = await BiliApi.findClipsFromBot(mid);
     const replays = json1.data.list.vlist;
 
     // 获取所有组织/社团列表

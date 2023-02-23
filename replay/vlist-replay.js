@@ -15,39 +15,9 @@ import AsrApi from '../api/AsrApi.js';
  */
 const archives = [
     {
-        // AI中国绊爱
-        authorIds: [8],
-        url: 'https://api.bilibili.com/x/series/archives?mid=484322035&series_id=210661&only_normal=true&sort=desc&pn=1&ps=10',
-        mode: 1
-    },
-    {
-        // 凜凜蝶凜
-        authorIds: [21],
-        url: 'https://api.bilibili.com/x/series/archives?mid=1220317431&series_id=2610314&only_normal=true&sort=desc&pn=1&ps=10',
-        mode: 1
-    },
-    {
-        // 灯夜tomoya
-        authorIds: [29],
-        url: 'https://api.bilibili.com/x/series/archives?mid=1854400894&series_id=2880259&only_normal=true&sort=desc&pn=1&ps=10',
-        mode: 1
-    },
-    {
-        // 扇宝
-        authorIds: [30],
-        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1682965468&season_id=1022826&sort_reverse=false&page_num=1&page_size=10',
-        mode: 2
-    },
-    {
-        // 安可
-        authorIds: [31],
-        url: 'https://api.bilibili.com/x/series/archives?mid=1375400985&series_id=2924566&only_normal=true&sort=desc&pn=1&ps=10',
-        mode: 2
-    },
-    {
         // NB-Light
         authorIds: [39, 40, 41, 42, 43],
-        url: 'https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=1548358039&season_id=1107501&sort_reverse=false&page_num=1&page_size=100',
+        mid: 1548358039,
         mode: 3
     }
 ];
@@ -58,14 +28,10 @@ const archives = [
         const archive = archives[i];
         try {
             // 获取指定archive的一批B站视频源
-            let videos = [];
-            const archiveRes = await fetch(archive.url);  // 请求合集列表
-            const archiveJson = await archiveRes.json();
-            if (!archiveRes.ok) {
-                PushApi.push(`请求B站合集列表失败`, JSON.stringify(archiveJson));
-                continue;
-            }
-            videos = archiveJson.data.archives;
+            // 获取字幕库投稿bot中的回放列表
+            const mid = 1179112593;
+            const json1 = await BiliApi.findClipsFromBot(mid);
+            const videos = json1.data.list.vlist;
             console.log(videos);
             
             const authorIds = archive.authorIds;

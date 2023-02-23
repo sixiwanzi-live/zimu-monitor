@@ -3,8 +3,8 @@ import config from '../config.js';
 
 export default class BiliApi {
 
-    static async findClipsFromBot() {
-        const url = `${config.bili.api.url}/x/space/wbi/arc/search?mid=1179112593&pn=1&ps=50&index=1&order=pubdate&order_avoided=true`;
+    static async findClipsFromBot(mid) {
+        const url = `${config.bili.api.url}/x/space/wbi/arc/search?mid=${mid}&pn=1&ps=50&index=1&order=pubdate&order_avoided=true`;
         const res = await fetch(url, {
             method: 'GET',
             headers: {
