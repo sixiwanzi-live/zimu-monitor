@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import PushApi from '../api/PushApi.js';
 import ZimuApi from '../api/ZimuApi.js';
 import BiliApi from '../api/BiliApi.js';
@@ -16,10 +15,42 @@ import AsrApi from '../api/AsrApi.js';
  */
 const archives = [
     {
+        // 扇宝
+        authorIds: [30],
+        mid: 1682965468,
+        match: (clip, video) => {
+            const modifiedTitle = clip.title.replaceAll('_', '')
+            const dt1 = `${clip.datetime.substring(0,4)}${clip.datetime.substring(5,7)}${clip.datetime.substring(8,10)}`;
+            return (video.title.indexOf(modifiedTitle) !== -1 || video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1) &&
+                    video.title.indexOf('扇宝录播') !== -1 && 
+                    video.title.indexOf(dt1) !== -1 ;
+        }
+    },
+    {
+        // 安可
+        authorIds: [31],
+        mid: 1375400985,
+        match: (clip, video) => {
+            const modifiedTitle = clip.title.replaceAll('_', '');
+            const dt1 = clip.datetime.substring(0, 10);
+            const dt2 = `${clip.datetime.substring(0,4)}-${parseInt(clip.datetime.substring(5,7))}-${parseInt(clip.datetime.substring(8,10))}`;
+            return (video.title.indexOf(modifiedTitle) !== -1 || video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1) &&
+                    video.title.indexOf('纯净版直播录像') !== -1 && 
+                    (video.title.indexOf(dt1) !== -1 || video.title.indexOf(dt2) !== -1);
+        }
+    },
+    {
         // NB-Light
         authorIds: [39, 40, 41, 42, 43],
         mid: 1548358039,
-        mode: 3
+        match: (clip, video) => {
+            const modifiedTitle = clip.title.replaceAll('_', '');
+            const dt1 = `${clip.datetime.substring(0,4)}/${clip.datetime.substring(5,7)}/${clip.datetime.substring(8,10)}`;
+            return (video.title.indexOf(modifiedTitle) !== -1 || video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1) &&
+                    video.title.indexOf('直播录播') !== -1 && 
+                    video.title.indexOf(dt1) !== -1 &&
+                    video.title.indexOf(author.name) !== -1;
+        }
     }
 ];
 
@@ -30,9 +61,8 @@ const archives = [
         try {
             // 获取指定archive的一批B站视频源
             // 获取字幕库投稿bot中的回放列表
-            const json1 = await BiliApi.findClipsFromBot(archive.mid);
-            const videos = json1.data.list.vlist;
-            console.log(videos);
+            const dlist = await BiliApi.findClipsFromDynamic(archive.mid);
+            const videos = dlist.data.list.vlist;
             
             const authorIds = archive.authorIds;
             for (let j = 0; j < authorIds.length; ++j) {
@@ -50,62 +80,10 @@ const archives = [
                         }
                         for (let k = 0; k < clips.length; ++k) {
                             const clip = clips[k];
-                            // clip信息更新入库写文件的时候，因为windows系统不支持*号，所以clip.title中的*换成了_
-                            // 这里去掉_以便于匹配B站源的标题
-                            const modifiedTitle = clip.title.replaceAll('_', '');
-                            const f1 = clip.datetime.substring(0, 10);
-                            const f2 = `${clip.datetime.substring(0,4)}-${parseInt(clip.datetime.substring(5,7))}-${parseInt(clip.datetime.substring(8,10))}`;
-                            const f3 = `${clip.datetime.substring(0,4)}${clip.datetime.substring(5,7)}${clip.datetime.substring(8,10)}`;
-                            const f4 = `${clip.datetime.substring(0,4)}/${clip.datetime.substring(5,7)}/${clip.datetime.substring(8,10)}`;
-                            // 已经包含字幕的不处理
-                            const srt = await ZimuApi.findSrtByClipId(clip.id);
-                            if (srt.length !== 0) {
-                                continue;
-                            }
                             for (let m = 0; m < videos.length; ++m) {
                                 const video = videos[m];
                                 // 将指定clip与所有b站video按照规则逐一对比，发现标题匹配的就执行解析
-                                let matched = false;
-                                if (archive.mode === 1) {
-                                    const dt = `${clip.datetime.substring(0, 4)}年${parseInt(clip.datetime.substring(5, 7))}月${parseInt(clip.datetime.substring(8, 10))}日${parseInt(clip.datetime.substring(11, 13))}点场`;
-                                    if (
-                                        (
-                                            video.title.indexOf(modifiedTitle) !== -1 || 
-                                            video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1
-                                        ) && video.title.indexOf(dt) !== -1) {
-                                        matched = true;
-                                    }
-                                } else if (archive.mode === 2) {
-                                    if (
-                                        (
-                                            video.title.indexOf(modifiedTitle) !== -1  ||
-                                            video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1
-                                        ) && 
-                                        (
-                                            video.title.indexOf(f1) !== -1 || 
-                                            video.title.indexOf(f2) !== -1 || 
-                                            video.title.indexOf(f3) !== -1 || 
-                                            video.title.indexOf(f4) !== -1
-                                        )
-                                    ) {
-                                        matched = true;
-                                    }
-                                } else if (archive.mode === 3) {
-                                    if (
-                                        (
-                                            video.title.indexOf(modifiedTitle) !== -1 || 
-                                            video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1
-                                        ) && video.title.indexOf(author.name) !== -1 && 
-                                        (
-                                            video.title.indexOf(f1) !== -1 || 
-                                            video.title.indexOf(f2) !== -1 || 
-                                            video.title.indexOf(f3) !== -1 || 
-                                            video.title.indexOf(f4) !== -1
-                                        )
-                                    ) {
-                                        matched = true;
-                                    }
-                                }
+                                const matched = archive.match(clip, video);
                                 if (matched) {
                                     // 更新clip状态
                                     try {
