@@ -18,4 +18,9 @@ export default class BiliApi {
         const url = `${config.bili.api.url}/x/web-interface/view?bvid=${bvid}`;
         return await (await fetch(url)).json();
     }
+
+    static async fetchReplayList(mid, seriesId) {
+        const url = `${config.bili.api.url}/x/series/archives?mid=${mid}&series_id=${seriesId}&only_normal=true&sort=desc&pn=1&ps=10`;
+        return await (await fetch(url)).json();
+    }
 }

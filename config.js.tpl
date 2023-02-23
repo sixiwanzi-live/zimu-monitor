@@ -23,6 +23,14 @@ export default {
     bili: {
         api: {
             url: ''
-        }
+        },
+        replay: [{
+            authorId: 0,
+            seriesId: 0
+        },
+        {
+            authorId: 1,
+            seriesId: 1
+        }]
     }
 }
