@@ -30,8 +30,7 @@ const archives = [
         try {
             // 获取指定archive的一批B站视频源
             // 获取字幕库投稿bot中的回放列表
-            const mid = 1179112593;
-            const json1 = await BiliApi.findClipsFromBot(mid);
+            const json1 = await BiliApi.findClipsFromBot(archive.mid);
             const videos = json1.data.list.vlist;
             console.log(videos);
             
