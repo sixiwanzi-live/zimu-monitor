@@ -33,7 +33,7 @@ const archives = [
         // NB-Light
         authorIds: [39, 40, 41, 42, 43],
         mid: 1548358039,
-        match: (clip, video) => {
+        match: (clip, video, author) => {
             const modifiedTitle = clip.title.replaceAll('_', '');
             const dt1 = `${clip.datetime.substring(0,4)}/${clip.datetime.substring(5,7)}/${clip.datetime.substring(8,10)}`;
             return (video.title.indexOf(modifiedTitle) !== -1 || video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1) &&
@@ -73,7 +73,7 @@ const archives = [
                             for (let m = 0; m < videos.length; ++m) {
                                 const video = videos[m];
                                 // 将指定clip与所有b站video按照规则逐一对比，发现标题匹配的就执行解析
-                                const matched = archive.match(clip, video);
+                                const matched = archive.match(clip, video, author);
                                 if (matched) {
                                     // 更新clip状态
                                     try {
