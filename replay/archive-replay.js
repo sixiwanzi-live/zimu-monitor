@@ -23,7 +23,6 @@ import AsrApi from '../api/AsrApi.js';
                 }
                 const videoJson = await BiliApi.fetchReplayList(author.uid, seriesId);
                 const videos = videoJson.data.archives;
-                console.log(videoJson);
 
                 for (let k = 0; k < clips.length; ++k) {
                     const clip = clips[k];
