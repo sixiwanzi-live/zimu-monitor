@@ -36,9 +36,10 @@ const archives = [
         match: (clip, video, author) => {
             const modifiedTitle = clip.title.replaceAll('_', '');
             const dt1 = `${clip.datetime.substring(0,4)}/${clip.datetime.substring(5,7)}/${clip.datetime.substring(8,10)}`;
+            const dt2 = `${clip.datetime.substring(0,4)}/${parseInt(clip.datetime.substring(5,7))}/${clip.datetime.substring(8,10)}`;
             return (video.title.indexOf(modifiedTitle) !== -1 || video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1) &&
                     video.title.indexOf('直播录播') !== -1 && 
-                    video.title.indexOf(dt1) !== -1 &&
+                    (video.title.indexOf(dt1) !== -1 || video.title.indexOf(dt2) !== -1) &&
                     video.title.indexOf(author.name) !== -1;
         }
     }
@@ -62,7 +63,7 @@ const archives = [
                         const author = await ZimuApi.findAuthorById(authorId);
                         console.log(`处理author(${authorId},${author.name})的replay`);
                         // 查指定author是否存在直播中状态的clip
-                        const clips = await ZimuApi.findClipsByAuthorId(authorId, 4, 1, 20);
+                        const clips = await ZimuApi.findClipsByAuthorId(authorId, 4, 1, 5);
                         if (clips.length === 0) {
                             console.log(`author(${author.name})无未解析视频`);
                             res();
