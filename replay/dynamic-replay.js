@@ -36,7 +36,7 @@ const archives = [
         match: (clip, video, author) => {
             const modifiedTitle = clip.title.replaceAll('_', '');
             const dt1 = `${clip.datetime.substring(0,4)}/${clip.datetime.substring(5,7)}/${clip.datetime.substring(8,10)}`;
-            const dt2 = `${clip.datetime.substring(0,4)}/${parseInt(clip.datetime.substring(5,7))}/${clip.datetime.substring(8,10)}`;
+            const dt2 = `${clip.datetime.substring(0,4)}/${parseInt(clip.datetime.substring(5,7))}/${parseInt(clip.datetime.substring(8,10))}`;
             return (video.title.indexOf(modifiedTitle) !== -1 || video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1) &&
                     video.title.indexOf('直播录播') !== -1 && 
                     (video.title.indexOf(dt1) !== -1 || video.title.indexOf(dt2) !== -1) &&
