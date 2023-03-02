@@ -23,16 +23,14 @@ import AsrApi from '../api/AsrApi.js';
                 }
                 const videoJson = await BiliApi.fetchReplayList(author.uid, seriesId);
                 const videos = videoJson.data.archives;
-                console.log(videoJson);
 
                 for (let k = 0; k < clips.length; ++k) {
                     const clip = clips[k];
-                    const modifiedTitle = clip.title.replaceAll('_', '');
+                    // const modifiedTitle = clip.title.replaceAll('_', '');
                     const dt = `${clip.datetime.substring(0, 4)}年${parseInt(clip.datetime.substring(5, 7))}月${parseInt(clip.datetime.substring(8, 10))}日${parseInt(clip.datetime.substring(11, 13))}点场`;
                     for (let m = 0; m < videos.length; ++m) {
                         const video = videos[m];
-                        const matched = (video.title.indexOf(modifiedTitle) !== -1 || video.title.indexOf(modifiedTitle.replaceAll(' ', '')) !== -1) &&
-                                        video.title.indexOf(dt) !== -1;
+                        const matched = video.title.indexOf(dt) !== -1;
                         if (!matched) {
                             continue;
                         }
