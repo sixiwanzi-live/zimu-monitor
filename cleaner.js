@@ -5,6 +5,7 @@ import ZimuApi from './api/ZimuApi.js';
 
 (async () => {
 
+
     for (let i = 0; i < config.cleaner.authorIds.length; ++i) {
         const authorId = config.cleaner.authorIds[i];
         const author = await ZimuApi.findAuthorById(authorId);
@@ -17,7 +18,7 @@ import ZimuApi from './api/ZimuApi.js';
             files = await readdir(dir);
         } catch (ex) {
             console.log(`文件夹不存在:${dir}`);
-            break;
+            continue;
         }
         for (let p = 0; p < files.length; ++p) {
             const file = files[p];
