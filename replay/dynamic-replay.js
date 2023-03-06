@@ -30,6 +30,15 @@ const archives = [
         }
     },
     {
+        // 艾露露
+        authorIds: [34],
+        mid: 209730937,
+        match: (clip, video, author) => {
+            const dt = `${clip.datetime.substring(0,4)}${parseInt(clip.datetime.substring(5,7))}${parseInt(clip.datetime.substring(8,10))}`;
+            return video.title.indexOf(dt) !== -1 && video.title.indexOf(author.name) !== -1;
+        }
+    },
+    {
         // NB-Light
         authorIds: [39, 40, 41, 42, 43],
         mid: 1548358039,
