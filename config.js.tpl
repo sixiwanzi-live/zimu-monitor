@@ -22,7 +22,8 @@ export default {
     }
     bili: {
         api: {
-            url: ''
+            url: '',
+            cookie: ''
         },
         bot: 0,
         replay: [{
