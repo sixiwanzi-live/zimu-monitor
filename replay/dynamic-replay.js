@@ -39,6 +39,16 @@ const archives = [
         }
     },
     {
+        // 小柔channel
+        authorIds: [51],
+        mid: 399726271,
+        match: (clip, video, author) => {
+            const modifiedTitle = clip.title.replaceAll('_', '');
+            const dt = `${clip.datetime.substring(0,4)}/${clip.datetime.substring(5,7)}/${clip.datetime.substring(8,10)}`;
+            return video.title.indexOf('录播') !== -1 && video.title.indexOf(dt) !== -1 && video.title.indexOf(modifiedTitle) !== -1;
+        }
+    },
+    {
         // NB-Light
         authorIds: [39, 40, 41, 42, 43],
         mid: 1548358039,
